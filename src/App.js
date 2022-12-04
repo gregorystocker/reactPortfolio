@@ -8,11 +8,12 @@ import {
   ButtonGroup,
   Link,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EmailIcon from '@mui/icons-material/Email';
 
 
 import { useState } from 'react';
@@ -25,6 +26,14 @@ function App() {
   }
   function decrementNum() {
     setNum(num - 1);
+  }
+
+  function openLink(link) {
+    window.open(link, '_blank');
+  }
+
+  function openEmailClient() {
+
   }
 
   return (
@@ -42,27 +51,39 @@ function App() {
         >
 
           <Button
-            href="https://github.com/gregorystocker"
+            onClick={() => { openLink("https://github.com/gregorystocker") }}
             class="mdc-button"
             color="primary"
-            variant="text"
+            variant="outlined"
             startIcon={<GitHubIcon />}
           >
             Github
           </Button>
 
-
           <Button
-            href="https://www.linkedin.com/in/gregory-stocker-395a01159"
+            onClick={() => { openLink("https://www.linkedin.com/in/gregory-stocker-395a01159") }}
             class="mdc-button"
             color="primary"
-            variant="text"
+            variant="outlined"
             startIcon={<LinkedInIcon />}
             onClick={decrementNum}
           >
             LinkedIn
           </Button>
+
+          <Button
+            class="mdc-button"
+            color="primary"
+            variant="outlined"
+            startIcon={<EmailIcon />}
+            onClick={decrementNum}
+          >
+            Email
+          </Button>
+
         </ButtonGroup>
+
+
         <Home></Home>
 
         <BottomNavigation
