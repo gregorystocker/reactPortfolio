@@ -6,6 +6,8 @@ import {
   BottomNavigationAction,
   Button
 } from '@material-ui/core';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 import { useState } from 'react';
@@ -21,8 +23,23 @@ function App() {
   return (
     <div className="App">
       <header class="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Button class="mdc-button" onClick={sayHello}>
+        <img
+          src={logo}
+          className="App-logo"
+          alt="logo"
+          DeleteIcon />
+        <Button
+          class="mdc-button"
+          startIcon={<DeleteIcon />}
+          onClick={sayHello}
+        >
+          Add one to num</Button>
+
+        <Button
+          class="mdc-button"
+          startIcon={<SaveIcon />}
+          onClick={sayHello}
+        >
           Add one to num</Button>
         <p>
           Edit <code>src/App.js</code> and save to reload.
