@@ -4,7 +4,8 @@ import Home from './screens/Home.js';
 import {
   BottomNavigation,
   BottomNavigationAction,
-  Button
+  Button,
+  ButtonGroup
 } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -15,9 +16,11 @@ import { useState } from 'react';
 function App() {
   const [num, setNum] = useState(0);
   const [value, setValue] = useState(0);
-  function sayHello() {
+  function incrementNum() {
     setNum(num + 1);
-
+  }
+  function decrementNum() {
+    setNum(num - 1);
   }
 
   return (
@@ -28,19 +31,27 @@ function App() {
           className="App-logo"
           alt="logo"
           DeleteIcon />
-        <Button
-          class="mdc-button"
-          startIcon={<DeleteIcon />}
-          onClick={sayHello}
-        >
-          Add one to num</Button>
+        <ButtonGroup >
+          <Button
+            class="mdc-button"
+            color="primary"
+            startIcon={<DeleteIcon />}
+            onClick={incrementNum}
+          >
+            increment num</Button>
 
-        <Button
-          class="mdc-button"
-          startIcon={<SaveIcon />}
-          onClick={sayHello}
-        >
-          Add one to num</Button>
+          <Button
+            class="mdc-button"
+            color="secondary"
+
+            startIcon={<SaveIcon />}
+            onClick={decrementNum}
+          >
+            decrement num </Button>
+
+
+        </ButtonGroup>
+
         <p>
           Edit <code>src/App.js</code> and save to reload.
           num is: {num}
