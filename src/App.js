@@ -1,11 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import Home from './screens/Home.js';
-import { MDCRipple } from '@material/ripple';
+import { BottomNavigation } from '@mui/material';
+import { BottomNavigationAction } from '@mui/material';
+
 import { useState } from 'react';
 //src/screens/Home.js
 function App() {
   const [num, setNum] = useState(0);
+  const [value, setValue] = useState(0);
   function sayHello() {
     setNum(num + 1);
 
@@ -31,6 +34,17 @@ function App() {
         </a>
         <Home></Home>
       </header>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      >
+        <BottomNavigationAction label="Recents" />
+        <BottomNavigationAction label="Favorites" />
+        <BottomNavigationAction label="Nearby" />
+      </BottomNavigation>
 
     </div>
   );
