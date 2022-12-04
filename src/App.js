@@ -5,10 +5,13 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Button,
-  ButtonGroup
+  ButtonGroup,
+  Link
 } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 
 import { useState } from 'react';
@@ -31,39 +34,34 @@ function App() {
           className="App-logo"
           alt="logo"
           DeleteIcon />
-        <ButtonGroup >
-          <Button
-            class="mdc-button"
-            color="primary"
-            startIcon={<DeleteIcon />}
-            onClick={incrementNum}
-          >
-            increment num</Button>
+        <ButtonGroup color="primary">
 
           <Button
+            href="#"
+            variant="contained"
+            class="mdc-button"
+            color="primary"
+            startIcon={<GitHubIcon />}
+          >
+
+            Github
+          </Button>
+
+
+          <Button
+            variant="contained"
             class="mdc-button"
             color="secondary"
 
-            startIcon={<SaveIcon />}
+            startIcon={<LinkedInIcon />}
             onClick={decrementNum}
           >
-            decrement num </Button>
 
+
+            LinkedIn
+          </Button>
 
         </ButtonGroup>
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          num is: {num}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
         <Home></Home>
 
         <BottomNavigation
@@ -78,7 +76,7 @@ function App() {
           <BottomNavigationAction label="Nearby" />
         </BottomNavigation>
       </header>
-    </div>
+    </div >
   );
 }
 
