@@ -6,7 +6,8 @@ import {
   BottomNavigationAction,
   Button,
   ButtonGroup,
-  Link
+  Link,
+  Typography
 } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
@@ -34,33 +35,33 @@ function App() {
           className="App-logo"
           alt="logo"
           DeleteIcon />
-        <ButtonGroup color="primary">
+
+        <ButtonGroup
+          color="primary"
+          variant="contained"
+        >
 
           <Button
-            href="#"
-            variant="contained"
+            href="https://github.com/gregorystocker"
             class="mdc-button"
             color="primary"
+            variant="text"
             startIcon={<GitHubIcon />}
           >
-
             Github
           </Button>
 
 
           <Button
-            variant="contained"
+            href="https://www.linkedin.com/in/gregory-stocker-395a01159"
             class="mdc-button"
-            color="secondary"
-
+            color="primary"
+            variant="text"
             startIcon={<LinkedInIcon />}
             onClick={decrementNum}
           >
-
-
             LinkedIn
           </Button>
-
         </ButtonGroup>
         <Home></Home>
 
@@ -75,6 +76,7 @@ function App() {
           <BottomNavigationAction label="Favorites" />
           <BottomNavigationAction label="Nearby" />
         </BottomNavigation>
+
       </header>
     </div >
   );
