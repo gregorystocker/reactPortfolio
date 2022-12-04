@@ -1,8 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import Home from './screens/Home.js';
-import { BottomNavigation } from '@mui/material';
-import { BottomNavigationAction } from '@mui/material';
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Button
+} from '@material-ui/core';
+
 
 import { useState } from 'react';
 //src/screens/Home.js
@@ -16,10 +20,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header class="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button class="mdc-button" onClick={sayHello}>
-          Add one to num</button>
+        <Button class="mdc-button" onClick={sayHello}>
+          Add one to num</Button>
         <p>
           Edit <code>src/App.js</code> and save to reload.
           num is: {num}
@@ -33,19 +37,19 @@ function App() {
           Learn React
         </a>
         <Home></Home>
-      </header>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction label="Recents" />
-        <BottomNavigationAction label="Favorites" />
-        <BottomNavigationAction label="Nearby" />
-      </BottomNavigation>
 
+        <BottomNavigation
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          <BottomNavigationAction label="Recents" />
+          <BottomNavigationAction label="Favorites" />
+          <BottomNavigationAction label="Nearby" />
+        </BottomNavigation>
+      </header>
     </div>
   );
 }
