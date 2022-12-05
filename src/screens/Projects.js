@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function Porjects() {
+export default function Projects() {
 
     return (
         <div>
-            Projects
+            Projects PlaceHolder
         </div>
 
     )

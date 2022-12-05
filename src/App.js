@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './screens/Projects.js';
+import Projects from './screens/Projects.js';
+import Resume from './screens/Resume.js';
+import AboutMe from './screens/AboutMe.js';
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -20,7 +22,8 @@ import { useState } from 'react';
 //src/screens/Home.js
 function App() {
 
-  const [value, setValue] = useState(0);
+
+  const [currentTab, setCurrentTab] = useState(0);
 
   async function openLink(link) {
     window.open(link, '_blank');
@@ -28,6 +31,19 @@ function App() {
 
   async function openEmailClient() {
     window.open('mailto:gregorystocker2@gmail.com', '_blank');
+  }
+
+  function showTab() {
+    switch (currentTab) {
+      case "Projects":
+        return <Projects />;
+      case "About Me":
+        return <AboutMe />;
+      case "Home":
+        return "Home";
+      default:
+        return "Home";
+    }
   }
 
   return (
@@ -91,30 +107,18 @@ function App() {
           </Button>
 
         </ButtonGroup>
-        <Fab
-          class="mdc-button"
-          color="primary"
-          variant="extended"
-          aria-label="add"
-          startIcon={<EmailIcon />}
-          onClick={async () => { await openEmailClient() }}
-        >
-          Projects
-        </Fab>
-
-
-        <Home></Home>
+        {showTab()}
 
         <BottomNavigation
           showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
+          value={currentTab}
+          onChange={(event, newTab) => {
+            setCurrentTab(newTab);
           }}
         >
-          <BottomNavigationAction label="Recents" />
-          <BottomNavigationAction label="Favorites" />
-          <BottomNavigationAction label="Nearby" />
+          <BottomNavigationAction label="Projects" value={"Projects"} />
+          <BottomNavigationAction label="About Me" value={"About Me"} />
+          <BottomNavigationAction label="Home" value={"Home"} />
         </BottomNavigation>
 
       </header>
