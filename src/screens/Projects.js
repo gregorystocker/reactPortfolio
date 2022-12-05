@@ -1,11 +1,10 @@
 import React from 'react'
 
-export default function Home() {
+export default function Porjects() {
 
     return (
         <div>
-            Home
-
+            Projects
         </div>
 
     )

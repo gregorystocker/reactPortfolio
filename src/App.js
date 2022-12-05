@@ -1,16 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './screens/Home.js';
+import Home from './screens/Projects.js';
 import {
   BottomNavigation,
   BottomNavigationAction,
   Button,
   ButtonGroup,
-  Link,
-  Typography
+  Avatar,
+  Fab
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
+import profilePic from './images/tahoePic.png';
+
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -19,21 +19,15 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useState } from 'react';
 //src/screens/Home.js
 function App() {
-  const [num, setNum] = useState(0);
-  const [value, setValue] = useState(0);
-  function incrementNum() {
-    setNum(num + 1);
-  }
-  function decrementNum() {
-    setNum(num - 1);
-  }
 
-  function openLink(link) {
+  const [value, setValue] = useState(0);
+
+  async function openLink(link) {
     window.open(link, '_blank');
   }
 
-  function openEmailClient() {
-
+  async function openEmailClient() {
+    window.open('mailto:gregorystocker2@gmail.com', '_blank');
   }
 
   return (
@@ -45,13 +39,27 @@ function App() {
           alt="logo"
           DeleteIcon />
 
+
+        <Avatar alt="Greg Stocker"
+          sx={{
+            bgcolor: 'primary.light',
+            width: 75,
+            height: 75,
+
+          }}
+
+          src={profilePic}
+
+
+        >GS</Avatar>
+
         <ButtonGroup
-          color="primary"
+          color="secondary"
           variant="contained"
         >
 
           <Button
-            onClick={() => { openLink("https://github.com/gregorystocker") }}
+            onClick={async () => { await openLink("https://github.com/gregorystocker") }}
             class="mdc-button"
             color="primary"
             variant="outlined"
@@ -61,12 +69,13 @@ function App() {
           </Button>
 
           <Button
-            onClick={() => { openLink("https://www.linkedin.com/in/gregory-stocker-395a01159") }}
+
+            onClick={async () => { await openLink("https://www.linkedin.com/in/gregory-stocker-395a01159") }}
             class="mdc-button"
             color="primary"
             variant="outlined"
             startIcon={<LinkedInIcon />}
-            onClick={decrementNum}
+
           >
             LinkedIn
           </Button>
@@ -76,12 +85,22 @@ function App() {
             color="primary"
             variant="outlined"
             startIcon={<EmailIcon />}
-            onClick={decrementNum}
+            onClick={async () => { await openEmailClient() }}
           >
             Email
           </Button>
 
         </ButtonGroup>
+        <Fab
+          class="mdc-button"
+          color="primary"
+          variant="extended"
+          aria-label="add"
+          startIcon={<EmailIcon />}
+          onClick={async () => { await openEmailClient() }}
+        >
+          Projects
+        </Fab>
 
 
         <Home></Home>
