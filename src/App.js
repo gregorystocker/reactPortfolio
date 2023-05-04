@@ -21,14 +21,15 @@ import EmailIcon from '@mui/icons-material/Email';
 
 let backgroundColor = undefined;
 backgroundColor = `hsl(180, 50%, 50%)`;
+let sunStartX = 100;
 //src/screens/Home.js
 function App() {
-
   const [degree, setDegree] = useState(0);
   const [hue, setHue] = useState(180);
   const [brightness, setBrightness] = useState(50);
   const [currentTab, setCurrentTab] = useState(0);
-  console.log('hue is: ' + hue);
+  const [width, setWidth] = useState(50);
+  const [height, setHeight] = useState(0);
 
   function handleSlide(event) {
     setDegree(event.target.value);
@@ -45,15 +46,19 @@ function App() {
       console.log(`brightness: ${brightness}`);
       backgroundColor = `hsl(${hue}, 50%, ${brightness}%)`;
     }
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
 
-    console.log(`backgroundColor is: ${backgroundColor}`);
-
-
-
-
+    const sun = new Path2D();
+    context.fillStyle = "#DFEE10";
+    let newX = parseInt(sunStartX) + degree;
+    let newY = sunTrajectory(newX);
+    sun.arc(newX, newY, 500, Math.PI, 2 * Math.PI);
+    context.fill(sun);
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.stroke(sun);
   }
-
-
   async function openLink(link) {
     window.open(link, '_blank');
   }
@@ -82,12 +87,13 @@ function App() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    const width = canvas.width;
-    const height = canvas.height;
+
 
     // Set canvas dimensions to match screen width
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    setWidth(canvas.width);
+    setHeight(canvas.height);
     context.fillStyle = backgroundColor;
 
     //draw in the sun
@@ -111,8 +117,7 @@ function App() {
     context.stroke(circle);
     circle.arc(0, height, 600, Math.PI, 2 * Math.PI);
     context.fill(circle);
-
-  }, [hue, backgroundColor]); // dependency array. Whenever something in this array changes, useEffect will be called again.
+  }, [hue, backgroundColor, height, width]); // dependency array. Whenever something in this array changes, useEffect will be called again.
 
   return (
     <div className="App" style={{ position: 'relative', zIndex: 0 }}>
@@ -211,6 +216,14 @@ function App() {
       </header>
     </div >
   );
+}
+
+/**
+ * takes in some x value as the horizontal coordinate, and gives the height
+ * @param {} x 
+ */
+function sunTrajectory(x) {
+  return -x * x + 100;
 }
 
 export default App;
