@@ -19,17 +19,40 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 
+let backgroundColor = undefined;
+backgroundColor = `hsl(180, 50%, 50%)`;
 //src/screens/Home.js
 function App() {
 
-  const [hue, setHue] = useState(0);
+  const [degree, setDegree] = useState(0);
+  const [hue, setHue] = useState(180);
+  const [brightness, setBrightness] = useState(50);
   const [currentTab, setCurrentTab] = useState(0);
-
+  console.log('hue is: ' + hue);
 
   function handleSlide(event) {
-    setHue(event.target.value);
+    setDegree(event.target.value);
+    if (degree < 90) {
+      let newHue = parseInt(degree) + 180;
+      setHue(newHue);
+      console.log(`hue: ${hue}`);
+      backgroundColor = `hsl(${hue}, 50%, 50%)`;
+    } else {
+      let newHue = 90 - parseInt(degree) % 90 + 180;
+      setHue(newHue);
+      let conversionFactor = 50 / 90;
+      setBrightness(newHue * conversionFactor - 101)
+      console.log(`brightness: ${brightness}`);
+      backgroundColor = `hsl(${hue}, 50%, ${brightness}%)`;
+    }
+
+    console.log(`backgroundColor is: ${backgroundColor}`);
+
+
+
+
   }
-  const backgroundColor = `hsl(${hue}, 50%, 50%)`;
+
 
   async function openLink(link) {
     window.open(link, '_blank');
@@ -37,6 +60,7 @@ function App() {
 
   async function openEmailClient() {
     window.open('mailto:gregorystocker2@gmail.com', '_blank');
+
   }
 
   function showTab() {
@@ -58,15 +82,37 @@ function App() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
+    const width = canvas.width;
+    const height = canvas.height;
+
     // Set canvas dimensions to match screen width
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas.backgroundColor = backgroundColor
-
-    // Draw something on the canvas (optional)
     context.fillStyle = backgroundColor;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-  }, [hue]); // dependency array. Whenever something in this array changes, useEffect will be called again.
+
+    //draw in the sun
+    const sun = new Path2D();
+    context.fillStyle = "#318817";
+    sun.arc(width - 100, height, 500, Math.PI, 2 * Math.PI);
+
+    // draw in the hills
+    const circle = new Path2D();
+    context.fillStyle = "#318817";
+
+    circle.arc(width - 100, height, 500, Math.PI, 2 * Math.PI);
+    context.fill(circle);
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.stroke(circle);
+    circle.arc(width - width / 2, height, 500, Math.PI, 2 * Math.PI);
+    context.fill(circle);
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.stroke(circle);
+    circle.arc(0, height, 600, Math.PI, 2 * Math.PI);
+    context.fill(circle);
+
+  }, [hue, backgroundColor]); // dependency array. Whenever something in this array changes, useEffect will be called again.
 
   return (
     <div className="App" style={{ position: 'relative', zIndex: 0 }}>
@@ -81,7 +127,7 @@ function App() {
       ></canvas>
       <header class="App-header" style={
         {
-          opacity: "  90%"
+          // opacity: "50%"
 
         }
 
@@ -157,8 +203,9 @@ function App() {
           <BottomNavigationAction label="About Me" value={"About Me"} />
           <BottomNavigationAction label="Home" value={"Home"} />
         </BottomNavigation>
-        <input type="range" min="0" max="360" value={hue} onChange={handleSlide} style={{
+        <input type="range" min="0" max="180" defaultValue={"0"} value={degree} onChange={handleSlide} style={{
           width: '50%',
+          opacity: "100%"
         }} />
 
       </header>
