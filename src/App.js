@@ -1,3 +1,5 @@
+import { useRef, useEffect, useState } from 'react';
+
 import logo from './logo.svg';
 import './App.css';
 import Projects from './screens/Projects.js';
@@ -17,8 +19,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 
-
-import { useState } from 'react';
 //src/screens/Home.js
 function App() {
 
@@ -46,9 +46,31 @@ function App() {
     }
   }
 
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+
+    // Set canvas dimensions to match screen width
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Draw something on the canvas (optional)
+    context.fillStyle = 'red';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
+
   return (
-    <div className="App">
-      <header class="App-header">
+    <div className="App" style={{ position: 'relative', zIndex: 0 }}>
+      <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: -1 }}
+      ></canvas>
+      <header class="App-header" style={
+        {
+          opacity: "  90%"
+        }
+
+      } >
         <img
           src={logo}
           className="App-logo"

@@ -11,7 +11,6 @@ export default function AboutMe() {
             I also dabble in Python and Bash Scripting. My favorite operating system at the moment is Ubuntu, and my 
             favorite version control system is Git!
         </div>
-
     )
 }
 
