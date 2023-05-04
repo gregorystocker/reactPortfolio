@@ -21,17 +21,18 @@ import EmailIcon from '@mui/icons-material/Email';
 
 let backgroundColor = undefined;
 backgroundColor = `hsl(180, 50%, 50%)`;
-let sunStartX = 100;
+let sunStartX = window.innerWidth / 8;
 //src/screens/Home.js
 function App() {
   const [degree, setDegree] = useState(0);
   const [hue, setHue] = useState(180);
   const [brightness, setBrightness] = useState(50);
   const [currentTab, setCurrentTab] = useState(0);
-  const [width, setWidth] = useState(50);
+  const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
   function handleSlide(event) {
+
     setDegree(event.target.value);
     if (degree < 90) {
       let newHue = parseInt(degree) + 180;
@@ -46,18 +47,7 @@ function App() {
       console.log(`brightness: ${brightness}`);
       backgroundColor = `hsl(${hue}, 50%, ${brightness}%)`;
     }
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
 
-    const sun = new Path2D();
-    context.fillStyle = "#DFEE10";
-    let newX = parseInt(sunStartX) + degree;
-    let newY = sunTrajectory(newX);
-    sun.arc(newX, newY, 500, Math.PI, 2 * Math.PI);
-    context.fill(sun);
-    context.strokeStyle = 'black';
-    context.lineWidth = 2;
-    context.stroke(sun);
   }
   async function openLink(link) {
     window.open(link, '_blank');
@@ -86,24 +76,37 @@ function App() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-
-
-
+    context.clearRect(0, 0, width, height);
     // Set canvas dimensions to match screen width
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     setWidth(canvas.width);
     setHeight(canvas.height);
+
     context.fillStyle = backgroundColor;
 
     //draw in the sun
     const sun = new Path2D();
-    context.fillStyle = "#318817";
-    sun.arc(width - 100, height, 500, Math.PI, 2 * Math.PI);
+    context.fillStyle = "#DFEE10";
+    console.log("SunstartX is " + sunStartX + "Degree is " + degree);
+    let newX = sunStartX + parseInt(degree) * 50;
+    let newY = sunTrajectory(newX);
+    console.log(`newX is: ${newX} and newY is: ${newY}`)
+    sun.arc(newX, newY, 100, 0, 2 * Math.PI);
+    context.fill(sun);
+    context.strokeStyle = 'black';
+    context.lineWidth = 2;
+    context.stroke(sun);
 
     // draw in the hills
     const circle = new Path2D();
-    context.fillStyle = "#318817";
+    let hillBrightness = 30;
+    if (parseInt(brightness) < 30) {
+
+    }
+
+
+    context.fillStyle = `hsl(110, 50%, ${parseInt(brightness - 10)}%)`;
 
     circle.arc(width - 100, height, 500, Math.PI, 2 * Math.PI);
     context.fill(circle);
@@ -117,7 +120,7 @@ function App() {
     context.stroke(circle);
     circle.arc(0, height, 600, Math.PI, 2 * Math.PI);
     context.fill(circle);
-  }, [hue, backgroundColor, height, width]); // dependency array. Whenever something in this array changes, useEffect will be called again.
+  }, [degree, hue, height, brightness, width]); // dependency array. Whenever something in this array changes, useEffect will be called again.
 
   return (
     <div className="App" style={{ position: 'relative', zIndex: 0 }}>
@@ -208,8 +211,8 @@ function App() {
           <BottomNavigationAction label="About Me" value={"About Me"} />
           <BottomNavigationAction label="Home" value={"Home"} />
         </BottomNavigation>
-        <input type="range" min="0" max="180" defaultValue={"0"} value={degree} onChange={handleSlide} style={{
-          width: '50%',
+        <input type="range" min="0" max="150" defaultValue={"0"} value={degree} onChange={handleSlide} style={{
+          width: '25%',
           opacity: "100%"
         }} />
 
@@ -223,7 +226,10 @@ function App() {
  * @param {} x 
  */
 function sunTrajectory(x) {
-  return -x * x + 100;
+  x = x - window.innerWidth / 2;
+  let y = x * (1 / 5000) * x;
+  console.log(`x is: ${x} and y is: ${y}`);
+  return y;
 }
 
 export default App;
