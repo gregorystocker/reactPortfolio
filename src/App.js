@@ -22,8 +22,14 @@ import EmailIcon from '@mui/icons-material/Email';
 //src/screens/Home.js
 function App() {
 
-
+  const [hue, setHue] = useState(0);
   const [currentTab, setCurrentTab] = useState(0);
+
+
+  function handleSlide(event) {
+    setHue(event.target.value);
+  }
+  const backgroundColor = `hsl(${hue}, 50%, 50%)`;
 
   async function openLink(link) {
     window.open(link, '_blank');
@@ -55,19 +61,28 @@ function App() {
     // Set canvas dimensions to match screen width
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas.backgroundColor = backgroundColor
 
     // Draw something on the canvas (optional)
-    context.fillStyle = 'red';
+    context.fillStyle = backgroundColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
-  }, []);
+  }, [hue]); // dependency array. Whenever something in this array changes, useEffect will be called again.
 
   return (
     <div className="App" style={{ position: 'relative', zIndex: 0 }}>
-      <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, zIndex: -1 }}
+      <canvas ref={canvasRef} style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: -1,
+        background: backgroundColor
+
+      }}
       ></canvas>
       <header class="App-header" style={
         {
           opacity: "  90%"
+
         }
 
       } >
@@ -142,6 +157,9 @@ function App() {
           <BottomNavigationAction label="About Me" value={"About Me"} />
           <BottomNavigationAction label="Home" value={"Home"} />
         </BottomNavigation>
+        <input type="range" min="0" max="360" value={hue} onChange={handleSlide} style={{
+          width: '50%',
+        }} />
 
       </header>
     </div >
